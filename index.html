@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PAC2</title>
+    <meta name="description" content="exemple iframe amb a-frame">
+	<style>
+		#pagina{width: 95%;max-width:1300px;margin: auto;}
+		#header{height: 40px;text-align:center;margin-bottom:20px;}
+		#scontainer{display:flex;flex-direction: row;justify-content: center;gap: 20px;flex-wrap: wrap; margin-bottom: 10%;}
+		body{background-color:cadetblue;}
+		h3{text-align: center;}
+		h2{text-align: center;}
+		.VRarea{position: relative;flex:1 1 380px;height: 450px;background-color:black;box-sizing: border-box;}
+		.vr{width: 100%;height: 100%;border: 0;}
+		.go{position: absolute;right:10px;bottom:10px;width: 53px;height: 39px;background-color:rgba(0,0,0,0.2);cursor: pointer;z-index: 10;}
+		p{text-align:center;}
+	</style>
+  </head>
+  <body>
+	  <div id="header">
+		  <h1>VR A-FRAME</h1>
+	  </div>
+	<div id="scontainer">
+		<div class="VRarea">
+			<iframe class="vr" src="a-sky.html" allow="autoplay; fullscreen"></iframe>
+			<div class="go" onClick="document.location='a-sky.html'"></div>
+			<div><h3>Els boscos perduts</h3></div>
+		</div>
+		<div class="VRarea">
+			<iframe class="vr" src="a-videosphere.html" allow="autoplay; fullscreem"></iframe>
+			<div class="go" onClick="document.location='a-videosphere.html'"></div>
+			<div><h3>Temples misteriosos</h3></div>
+		</div>
+	</div>
+	<footer>
+		<h2>Cliqueu les ulleres per entrar-hi</h2>
+	</footer>		
+  </body>
+</html>

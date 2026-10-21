@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Videosphere</title>
+    <meta name="description" content="Videosphere">
+    <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+    <script> <!--Script realitzat amb ia per autoreproduir els videos-->
+      AFRAME.registerComponent('iniciar-video', {
+        init: function () {
+          var videos = document.querySelectorAll('video');
+          
+          // 1. Intento de reproducción automática al cargar
+          videos.forEach(function(video) {
+            var playPromise = video.play();
+            // Capturamos el error en silencio por si el navegador es muy estricto y lo bloquea
+            if (playPromise !== undefined) {
+              playPromise.catch(function(error) {
+                console.log("El navegador bloqueó el autoplay, esperando clic...");
+              });
+            }
+          });
+
+          // 2. Mantenemos el clic como "Plan B" de seguridad
+          window.addEventListener('mousedown', function () {
+            videos.forEach(function(video) {
+              video.play();
+            });
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene iniciar-video>
+      <a-assets>
+        <img id="texturaRubic" src="rubic.jpg"><!--Imatge generada amb ia-->>
+        <!--video id="cubsVideo" autoplay loop="true" src="cubsVideo.mp4"-->
+        <video id="bckvideo" autoplay loop="true" muted playsinline src="video360.mp4"></video><!-- source: https://www.youtube.com/watch?v=mj2OQvDuy_g-->
+      </a-assets>
+
+      <a-videosphere src="#bckvideo"></a-videosphere>
+      
+      <a-box position="-8 1 -2" rotation="0 30 45" scale="2 2 2" src="#texturaRubic">
+        <a-animation attribute="position" direction="alternate" dur="2000" repeat="indefinite" to="-8 1 -3"></a-animation>
+        <a-animation scale="rotation" begin="mouseenter" dur="300" to="360 45 45"></a-animation>
+      </a-box>   
+  
+      <a-camera>
+        <a-cursor color="#ff66ff"></a-cursor>
+      </a-camera>
+    </a-scene>
+  </body>
+</html>

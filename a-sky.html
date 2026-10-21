@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sky</title>
+    <meta name="description" content="Sky">
+    <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+    <script><!--Script realitzat amb ia per autoreproduir els videos-->
+      AFRAME.registerComponent('iniciar-video', {
+        init: function () {
+          var videos = document.querySelectorAll('video');
+          
+          // 1. Intento de reproducción automática al cargar
+          videos.forEach(function(video) {
+            var playPromise = video.play();
+            // Capturamos el error en silencio por si el navegador es muy estricto y lo bloquea
+            if (playPromise !== undefined) {
+              playPromise.catch(function(error) {
+                console.log("El navegador bloqueó el autoplay, esperando clic...");
+              });
+            }
+          });
+
+          // 2. Mantenemos el clic como "Plan B" de seguridad
+          window.addEventListener('mousedown', function () {
+            videos.forEach(function(video) {
+              video.play();
+            });
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene iniciar-video>
+      <a-assets timeout="10000">
+        <!--source: https://giphy.com/gifs/trippy-abstract-pi-slices-OalJFGFBD4D2xn61qb-->
+        <video id="texturaWater" preload="auto" loop="true" muted playsinline webkit-playsinline crossorigin="anonymous" src="water.mp4"></video>
+        <!--source: https://giphy.com/gifs/hot-fire-red-3o7aCQTyoPLEVwVtZK-->
+        <video id="texturaFire" preload="auto" loop="true" muted playsinline webkit-playsinline crossorigin="anonymous" src="fire.mp4"></video>
+        <img id="texturaEarth" src="stone.avif"></img><!--source: https://aitextured.com/upload/resize_cache/iblock/4c1/w8pb82zr9w8rwm8qqe57cmkpqf1lswyw/720_720_1/121_Stone.png.avif-->
+        <!--source: https://giphy.com/gifs/clouds-weather-overcast-yB3gwsCaymSglI1Jqt-->
+        <video id="texturaWind" preload="auto" loop="true" muted playsinline webkit-playsinline crossorigin="anonymous" src="wind.mp4"></video>
+        <img id="sky" src="panoramic1.jpg"> <!--source: https://www.magnific.com/free-photo/aerial-drone-view-chisinau-downtown-panorama-view-multiple-buildings-roads-parks_18511905.htm#fromView=search&page=2&position=15&uuid=c1f97734-225e-4084-9476-1681c16f4ee0&track=ais_hybrid&query=Panorama+360+city+mouintain-->
+      </a-assets>
+      <a-sky id="image-360" radius="150" src="#sky"></a-sky>
+      <a-entity>
+        <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+        <a-sphere position="-12 1 -2" rotation="0 30 45" scale="2 2 2" src="#texturaWater">
+          <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+          <a-animation attribute="scale" direction="alternate" dur="2000" repeat="indefinite" to="3 3 3"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseenter" dur="1000" from="0.4" to="1"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseleave" dur="1000" from="1" to="0.4"></a-animation>
+        </a-sphere>
+      </a-entity>
+      <a-entity>
+        <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+        <a-sphere position="12 1 -2" rotation="0 0 0" scale="2 2 2" src="#texturaFire">
+          <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+          <a-animation attribute="scale" direction="alternate" dur="2000" repeat="indefinite" to="3 3 3"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseenter" dur="1000" from="1" to="0.4"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseleave" dur="1000" from="0.4" to="1"></a-animation>
+        </a-sphere>
+      </a-entity>
+      <a-entity>
+        <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+        <a-sphere position="0 1 -12" rotation="0 30 45" scale="2 2 2" src="#texturaWind">
+          <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+          <a-animation attribute="scale" direction="alternate" dur="2000" repeat="indefinite" to="3 3 3"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseenter" dur="1000" from="1" to="0.4"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseleave" dur="1000" from="0.4" to="1"></a-animation>
+        </a-sphere>
+      </a-entity>
+      <a-entity>
+        <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+        <a-sphere position="0 1 12" rotation="0 30 45" scale="2 2 2" src="#texturaEarth">
+          <a-animation attribute="rotation" dur="10000" repeat="indefinite" easing="linear" to="0 -360 0"></a-animation>
+          <a-animation attribute="scale" direction="alternate" dur="2000" repeat="indefinite" to="3 3 3"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseenter" dur="1000" from="1" to="0.4"></a-animation>
+          <a-animation attribute="material.opacity" begin="mouseleave" dur="1000" from="0.4" to="1"></a-animation>
+        </a-sphere>
+      </a-entity>  
+      <a-camera rotation="0 90 0">
+        <a-cursor color="#FF66FF"></a-cursor>
+      </a-camera>
+    </a-scene>
+  </body>
+</html>
